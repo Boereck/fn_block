@@ -1,0 +1,26 @@
+environment:
+  matrix:
+    - TARGET: x86_64-pc-windows-msvc
+      CHANNEL: stable
+    - TARGET: x86_64-pc-windows-gnu
+      CHANNEL: stable
+
+install:
+  - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
+  - rustup-init.exe -yv --default-toolchain %CHANNEL% --default-host %TARGET%
+  - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+  - rustc -vV
+  - cargo -vV
+
+build: false
+
+test_script:
+  - cargo build --release
+  - cargo test --all --release
+  - cargo build --benches --all --release
+  - cargo bench
+  - cargo doc --release --all --no-deps
+
+branches:
+  only:
+    - master

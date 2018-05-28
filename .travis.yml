@@ -1,0 +1,22 @@
+sudo: false
+
+language: rust
+
+cache: cargo
+
+rust:
+  - stable
+
+os:
+  - linux
+  - osx
+  
+script:
+  - cargo build --release
+  - cargo test --all --release
+  - cargo build --benches --all --release
+  - cargo bench
+  - cargo doc --release --all --no-deps
+
+branches:
+  only: master
