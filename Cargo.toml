@@ -2,7 +2,7 @@
 name = "fn_block"
 version = "0.1.0"
 authors = ["Max Bureck <max.bureck@fokus.fraunhofer.de>"]
-licanse = "Apache-2.0/MIT"
+license = "Apache-2.0/MIT"
 
 [dependencies]
 
