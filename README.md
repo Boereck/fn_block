@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Boereck/fn_block.svg?branch=master)](https://travis-ci.org/Boereck/fn_block) 
+[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/apctgp7w8qcwttag?svg=true)](https://ci.appveyor.com/project/Boereck/fn-block)
+
 # `fn_block` Library
 
 Library defining macros for calling blocks or expressions in a closure.
