@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/Boereck/fn_block.svg?branch=master)](https://travis-ci.org/Boereck/fn_block) 
-[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/apctgp7w8qcwttag?svg=true)](https://ci.appveyor.com/project/Boereck/fn-block)
+[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/apctgp7w8qcwttag?svg=true)](https://ci.appveyor.com/project/Boereck/fn-block) 
 
-# `fn_block` Library
+# `fn_block` Crate
 
 Library defining macros for calling blocks or expressions in a closure.
 
@@ -38,7 +38,7 @@ assert_eq!("foo", s.unwrap());
 As soon as the API documentation is published, a link to the crate documentation
 will be added here.
 
-# Functionality Overview
+## Functionality Overview
 
 In short, this crate provides the following APIs:
 
@@ -51,3 +51,12 @@ In short, this crate provides the following APIs:
 
 As soon as the API documentation is published it will be updated here.  
 For more examples, please have a look at the test module.
+
+## License
+
+The fn_block crate is licensed under the following licenses:
+
+ * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) / http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) / http://opensource.org/licenses/MIT)
+
+Choose under which you want to use the library.

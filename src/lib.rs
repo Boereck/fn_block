@@ -45,6 +45,14 @@
 //! let s = fn_expr!{ o?.get(0..3)?.to_lowercase().into_some() };
 //! assert_eq!("foo", s.unwrap());
 //! ```
+//!
+//! It was considered to provide a version of the macros that automatically
+//! calls `into()` on the result of the expression/block. This would allow an automatic
+//! conversion of a value to the actual return type, provided a fitting implementation
+//! of the `Into` trait was in scope. But this was considered too implicit. The `?` operator
+//! already performs implicit conversion of error types; this seems to be enough magic
+//! to grok for the user.
+
 
 ///////////////////////
 // Macro definitions //

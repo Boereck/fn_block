@@ -3,6 +3,22 @@ name = "fn_block"
 version = "0.1.0"
 authors = ["Max Bureck <max.bureck@fokus.fraunhofer.de>"]
 license = "Apache-2.0/MIT"
+exclude = [
+    ".travis.yml",
+    ".appveyor.yml",
+    ".gitignore",
+    ".project",
+]
+description = "Crate defining macros for calling blocks or expressions in a closure."
+documentation = "https://docs.rs/fn_block/0.1.0/fn_block/"
+homepage = "https://github.com/Boereck/fn_block"
+repository = "https://github.com/Boereck/fn_block.git"
+readme = "README.md"
+keywords = ["closure"]
+
+[badges]
+travis-ci = { repository = "Boereck/fn_block" }
+appveyor = { repository = "Boereck/fn_block" }
 
 [dependencies]
 
