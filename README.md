@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Boereck/fn_block.svg?branch=master)](https://travis-ci.org/Boereck/fn_block) 
 [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/apctgp7w8qcwttag?svg=true)](https://ci.appveyor.com/project/Boereck/fn-block) 
+[![Crates.io Version](https://img.shields.io/crates/v/fn_block.svg)](https://crates.io/crates/fn_block)
 
 # `fn_block` Crate
 
@@ -35,18 +36,17 @@ let s = fn_expr!{ o?.get(0..3)?.to_lowercase().into_some() };
 assert_eq!("foo", s.unwrap());
 ```
 
-As soon as the API documentation is published, a link to the crate documentation
-will be added here.
+Please visit the [API Documentation](https://docs.rs/fn_block/latest/) for more details.
 
 ## Functionality Overview
 
 In short, this crate provides the following APIs:
 
-* The `fn_expr` macro allows wrapping an expression into a lambda that is directly called.
-* The `fn_block` macro allows wrapping a block into a lambda that is directly called.
-* The `IntoSome` trait, which is implemented for all `Sized` types, allows to call `into_some` 
+* The [`fn_expr`] macro allows wrapping an expression into a lambda that is directly called.
+* The [`fn_block`] macro allows wrapping a block into a lambda that is directly called.
+* The [`IntoSome`] trait, which is implemented for all `Sized` types, allows to call [`into_some`] 
   on a value to move it into an `Option::Some`.
-* The `IntoOk` trait, which is implemented for all `Sized` types, allows to call `into_ok` 
+* The [`IntoOk`] trait, which is implemented for all `Sized` types, allows to call [`into_ok`] 
   on a value to move it into an `Result::Ok`.
 
 As soon as the API documentation is published it will be updated here.  
@@ -60,3 +60,10 @@ The fn_block crate is licensed under the following licenses:
  * MIT license ([LICENSE-MIT](LICENSE-MIT) / http://opensource.org/licenses/MIT)
 
 Choose under which you want to use the library.
+
+[`fn_expr`]: https://docs.rs/fn_block/latest/fn_block/macro.fn_expr.html
+[`fn_block`]: https://docs.rs/fn_block/latest/fn_block/macro.fn_block.html
+[`IntoSome`]: https://docs.rs/fn_block/latest/fn_block/trait.IntoSome.html
+[`into_some`]: https://docs.rs/fn_block/latest/fn_block/trait.IntoSome.html#tymethod.into_some
+[`IntoOk`]: https://docs.rs/fn_block/latest/fn_block/trait.IntoOk.html
+[`into_ok`]: https://docs.rs/fn_block/latest/fn_block/trait.IntoOk.html#tymethod.into_ok
