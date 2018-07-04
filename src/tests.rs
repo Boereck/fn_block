@@ -40,6 +40,26 @@ fn fn_block_none() {
 }
 
 #[test]
+fn fn_expr_block_some() {
+	let o: Option<i32> = Some(42);
+	let foo = fn_expr!{{
+		let gt_zero = o?.when(|&i| i > 0);
+		gt_zero?.when(|&i| i%2 == 0)
+	}};
+	assert_eq!(42, foo.expect("result"));
+}
+
+#[test]
+fn fn_expr_block_none() {
+	let o: Option<i32> = Some(42);
+	let foo = fn_expr!{{
+		let big_num = o?.when(|&i| i > 1000);
+		big_num?.when(|&i| i < 2000)
+	}};
+	assert!(foo.is_none());
+}
+
+#[test]
 fn fn_expr_some() {
 	let o: Option<i32> = Some(42);
 	let foo = fn_expr!{ o?.when(|&i| i > 0)?.when(|&i| i%2 == 0) };
@@ -95,4 +115,57 @@ fn showcase() {
 	use super::IntoSome;
 	let s = fn_expr!{ o?.get(0..3)?.to_lowercase().into_some() };
 	assert_eq!("foo", s.expect("result is Some"));
+}
+
+
+use std::num::ParseIntError;
+use std::str::Utf8Error;
+
+enum ConvertErr {
+	StrParseErr,
+	IntParseErr
+}
+
+impl From<Utf8Error> for ConvertErr {
+	fn from(_: Utf8Error) -> ConvertErr {
+		ConvertErr::StrParseErr
+	}
+}
+impl From<ParseIntError> for ConvertErr {
+	fn from(_: ParseIntError) -> ConvertErr {
+		ConvertErr::IntParseErr
+	}
+}
+
+
+#[test]
+#[cfg(feature = "unproven")]
+fn fn_catch_result() {
+	use std::str::from_utf8;
+	
+	let s: &[u8] = &[0x0020, 0x0034, 0x0032];
+	let i = fn_try! {
+		from_utf8(s)?.trim().parse::<u32>()?
+		=> catch {
+			ConvertErr::StrParseErr => 0u32,
+			ConvertErr::IntParseErr => u32::max_value()
+		}
+	};
+	assert_eq!(42, i);
+}
+
+#[test]
+#[cfg(feature = "unproven")]
+fn fn_catch_error() {
+	use std::str::from_utf8;
+	
+	let s: &[u8] = &[0x0020, 0x005A, 0x0032];
+	let i = fn_try! {
+		from_utf8(s)?.trim().parse::<u32>()?
+		=> catch {
+			ConvertErr::StrParseErr => 0u32,
+			ConvertErr::IntParseErr => u32::max_value()
+		}
+	};
+	assert_eq!(u32::max_value(), i);
 }

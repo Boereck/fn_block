@@ -16,7 +16,7 @@ To use this library, you have to add it to the dependencies of your `Cargo.toml`
 
 ```toml
 [dependencies]
-fn_block = "0.1.0"
+fn_block = "0.2.0"
 ```
 
 Then add the following lines to your module:
@@ -43,14 +43,26 @@ Please visit the [API Documentation](https://docs.rs/fn_block/latest/) for more 
 In short, this crate provides the following APIs:
 
 * The [`fn_expr`] macro allows wrapping an expression into a lambda that is directly called.
-* The [`fn_block`] macro allows wrapping a block into a lambda that is directly called.
 * The [`IntoSome`] trait, which is implemented for all `Sized` types, allows to call [`into_some`] 
   on a value to move it into an `Option::Some`.
 * The [`IntoOk`] trait, which is implemented for all `Sized` types, allows to call [`into_ok`] 
   on a value to move it into an `Result::Ok`.
 
-As soon as the API documentation is published it will be updated here.  
 For more examples, please have a look at the test module.
+
+## Unstable Features
+
+To use unstable features, the dependency declaration in your `Cargo.toml` has to be updated:
+
+```toml
+[dependencies]
+fn_block = { version = "0.2.0", features = ["unproven"] }
+```
+Note that this crate's unstable features *do* work on stable Rust.
+
+The following unstable APIs are available:
+
+* The [`fn_try`] macro allows wrapping an expression into a lambda, being called directly and recover from errors directly afterwards.
 
 ## License
 
@@ -63,6 +75,7 @@ Choose under which you want to use the library.
 
 [`fn_expr`]: https://docs.rs/fn_block/latest/fn_block/macro.fn_expr.html
 [`fn_block`]: https://docs.rs/fn_block/latest/fn_block/macro.fn_block.html
+[`fn_try`]: https://docs.rs/fn_block/latest/fn_block/macro.fn_try.html
 [`IntoSome`]: https://docs.rs/fn_block/latest/fn_block/trait.IntoSome.html
 [`into_some`]: https://docs.rs/fn_block/latest/fn_block/trait.IntoSome.html#tymethod.into_some
 [`IntoOk`]: https://docs.rs/fn_block/latest/fn_block/trait.IntoOk.html

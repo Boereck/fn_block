@@ -1,6 +1,6 @@
 [package]
 name = "fn_block"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Max Bureck <max.bureck@fokus.fraunhofer.de>"]
 license = "Apache-2.0/MIT"
 exclude = [
@@ -24,6 +24,9 @@ appveyor = { repository = "Boereck/fn_block" }
 
 [dev-dependencies]
 criterion = "0.2.3"
+
+[features]
+unproven = []
 
 [[bench]]
 name = "fn_block_benchmark"

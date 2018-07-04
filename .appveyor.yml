@@ -15,11 +15,11 @@ install:
 build: false
 
 test_script:
-  - cargo build --release
-  - cargo test --all --release
-  - cargo build --benches --all --release
-  - cargo bench
-  - cargo doc --release --all --no-deps
+  - cargo build --release --all-features
+  - cargo test --all --release --all-features
+  - cargo build --benches --all --release --all-features
+  - cargo bench --all-features
+  - cargo doc --release --all --no-deps --all-features
 
 branches:
   only:
