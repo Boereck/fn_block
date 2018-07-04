@@ -7,7 +7,7 @@
 * Added `IntoOk` trait and implementation for every type
 * Added `IntoSome` trait and implementation for every type
 
-## 0.2.0 (Unreleased)
+## 0.2.0 (2018-07-04)
 
 * Added unstable/unproven marco `fn_try` (crate feature `unproven` needs to be enabled)
 * Deprecated `fn_block` macro, since `fn_expr` can also wrap blocks. This is a bit ironic, since the crate name is `fn_block`
