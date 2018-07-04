@@ -1,6 +1,6 @@
 [package]
 name = "fn_block"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Max Bureck <max.bureck@fokus.fraunhofer.de>"]
 license = "Apache-2.0/MIT"
 exclude = [
@@ -10,7 +10,7 @@ exclude = [
     ".project",
 ]
 description = "Crate defining macros for calling blocks or expressions in a closure."
-documentation = "https://docs.rs/fn_block/0.1.0/fn_block/"
+documentation = "https://docs.rs/fn_block/0.2.1/fn_block/"
 homepage = "https://github.com/Boereck/fn_block"
 repository = "https://github.com/Boereck/fn_block.git"
 readme = "README.md"
@@ -27,6 +27,9 @@ criterion = "0.2.3"
 
 [features]
 unproven = []
+
+[package.metadata.docs.rs]
+all-features = true
 
 [[bench]]
 name = "fn_block_benchmark"

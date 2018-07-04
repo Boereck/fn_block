@@ -16,7 +16,7 @@ To use this library, you have to add it to the dependencies of your `Cargo.toml`
 
 ```toml
 [dependencies]
-fn_block = "0.2.0"
+fn_block = "0.2.1"
 ```
 
 Then add the following lines to your module:
@@ -56,7 +56,7 @@ To use unstable features, the dependency declaration in your `Cargo.toml` has to
 
 ```toml
 [dependencies]
-fn_block = { version = "0.2.0", features = ["unproven"] }
+fn_block = { version = "0.2.1", features = ["unproven"] }
 ```
 Note that this crate's unstable features *do* work on stable Rust.
 
