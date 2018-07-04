@@ -51,11 +51,11 @@
 //! conversion of a value to the actual return type, provided a fitting implementation
 //! of the `Into` trait was in scope. But this was considered too implicit. The `?` operator
 //! already performs implicit conversion of error types.
-//! 
-//! 
+//!
+//!
 //! # Unstable features
-//! 
-//! To enable unstable features, the crate feature `unproven` must be enabled 
+//!
+//! To enable unstable features, the crate feature `unproven` must be enabled
 //! explicitly. Here is an example dependency declaration that can be added to
 //! a users `Cargo.toml` file to enable the unstable features:
 //!
@@ -66,7 +66,7 @@
 //!
 //! Note that this crate's unstable features *do* work on stable Rust.
 //!
-//! The unstable macro [`fn_try!`] does call an expression in a lambda and *does* wrap 
+//! The unstable macro [`fn_try!`] does call an expression in a lambda and *does* wrap
 //! the sucess value into a `Result::Ok`. It then enforces to recover from the error type
 //! in a following `=> catch` block. The reasons behind this descision is documented in
 //! the [`fn_try!`] documentation.
@@ -91,7 +91,7 @@
 //! ```
 //! A more verbose and realistic version of the example above is available in
 //! the [`fn_try!`] documentation.
-//! 
+//!
 //! [`fn_try!`]: macro.fn_try.html
 
 ///////////////////////
@@ -99,7 +99,7 @@
 ///////////////////////
 
 /// *NOTE*: This macro has been deprecated! Use `fn_expr` instead
-/// 
+///
 /// # Intro
 ///
 /// This macro wraps a given rust code block into a closure and
@@ -142,14 +142,17 @@
 /// [`IntoSome`]: trait.IntoSome.html
 /// [`IntoOk`]: trait.IntoOk.html
 #[macro_export]
-#[deprecated(since="0.2.0", note="Please use `fn_expr` instead, since it can also be used to wrap blocks. Blocks are expressions as well.")]
+#[deprecated(
+    since = "0.2.0",
+    note = "Please use `fn_expr` instead, since it can also be used to wrap blocks. Blocks are expressions as well."
+)]
 macro_rules! fn_block {
-	($return_type:ty : $body:block) => {
-		(|| -> $return_type { $body })()
-	};
-	($body:block) => {
-		(|| $body)()
-	};
+    ($return_type:ty : $body:block) => {
+        (|| -> $return_type { $body })()
+    };
+    ($body:block) => {
+        (|| $body)()
+    };
 }
 
 /// This macro wraps a given rust code block into a closure and
@@ -194,37 +197,36 @@ macro_rules! fn_block {
 /// [`IntoOk`]: trait.IntoOk.html
 #[macro_export]
 macro_rules! fn_expr {
-	($return_type:ty : $body:expr) => {
-		(|| -> $return_type { $body })()
-	};
-	($body:expr) => {
-		(|| $body)()
-	};
+    ($return_type:ty : $body:expr) => {
+        (|| -> $return_type { $body })()
+    };
+    ($body:expr) => {
+        (|| $body)()
+    };
 }
 
-
 /// This macro wraps a given rust code expression into a closure and
-/// directly calls the closure. The result type of the expression is expected 
+/// directly calls the closure. The result type of the expression is expected
 /// to be an "unwrapped" sucess value (not a `Result` type).
 /// The error case (a failing case of a `?` operator) *must* be handled
-/// (and recovered to a success type value) by a following `=> catch` block. 
-/// - *Note 1*: Under the hood the result value of the expression will automatically wrapped 
+/// (and recovered to a success type value) by a following `=> catch` block.
+/// - *Note 1*: Under the hood the result value of the expression will automatically wrapped
 ///   into a `Result::Ok`, which is different from how the `fn_expr` and `fn_block` macros work!
 /// - *Note 2*: This macro is an unstable API to make use of it, enable the crate feature "unproven".
-/// 
-/// # Example: 
+///
+/// # Example:
 /// ```
 /// # #[macro_use]
 /// # use fn_block::*;
 /// use std::num::ParseIntError;
 /// use std::str::Utf8Error;
 /// use std::str::from_utf8;
-/// 
+///
 /// enum ConvertErr {
 /// 	StrParseErr,
 /// 	IntParseErr
 /// }
-/// 
+///
 /// impl From<Utf8Error> for ConvertErr {
 /// 	fn from(_: Utf8Error) -> ConvertErr {
 /// 		ConvertErr::StrParseErr
@@ -235,7 +237,7 @@ macro_rules! fn_expr {
 /// 		ConvertErr::IntParseErr
 /// 	}
 /// }
-/// 
+///
 /// let s: &[u8] = &[0x0020, 0x0034, 0x0032];
 /// let i = fn_try! {
 ///     from_utf8(s)?.trim().parse::<u32>()?
@@ -249,43 +251,43 @@ macro_rules! fn_expr {
 /// Depending on the error type used in the catch block the type is inferred
 /// which error type the errors raised in the closure are converted into. This
 /// is part of the `?` operator semantics. Note that this also implies, that
-/// the `_` pattern cannot be used as the only catch pattern for the error, 
+/// the `_` pattern cannot be used as the only catch pattern for the error,
 /// since in this case the error type cannot be inferred.
 ///
 /// It is advised to use a crate like [`failure`] for error management/conversion.
 ///
 /// # Note of Caution
-/// 
+///
 /// Note that this API may be subject of change! The names may change, and the
-/// automatic wrapping of result value may disappear. This functionality may be 
+/// automatic wrapping of result value may disappear. This functionality may be
 /// controversial and feedback is welcome if this functionality should stay.
-/// 
-/// # Internal workings 
-/// 
-/// The returned `Result` from the closure will be matched. If an `Ok` is 
+///
+/// # Internal workings
+///
+/// The returned `Result` from the closure will be matched. If an `Ok` is
 /// wrapped return value will be returned from the `fn_try`. If the returned
-/// result wrapps an error, the error type must be handled by the `=> catch` block 
+/// result wrapps an error, the error type must be handled by the `=> catch` block
 /// Following the expression given by the user. This is basically a match block where
 /// the user has to define recovery cases matching error types to the success return type.
-/// 
+///
 /// # Design descisions
-/// 
+///
 /// The name of the macro and the `=> catch` block are chosen to be similar to the ones
-/// chosen for [RFC 2388] and should still work with the "Rust 2018 Edition". 
+/// chosen for [RFC 2388] and should still work with the "Rust 2018 Edition".
 /// Unfortunately the macro name may confuse users of the deprecated `try!`
 /// macro, but it looks similar to `try`/`catch` blocks in other languages. The automatic
 /// wrapping of the sucessful result value into a `Result::Ok` may also be controversial
-/// and even the author is not entirely sure if this is the best way to model the API. 
+/// and even the author is not entirely sure if this is the best way to model the API.
 /// However, [RFC 2388] already seems to settle on the automatic wrapping and the resulting
 /// code may look more familiar to people comming from other languages.
-/// 
+///
 /// [RFC 2388]: https://rust-lang.github.io/rfcs/2388-try-expr.html
 /// [`failure`]: https://crates.io/crates/failure
 #[macro_export]
 #[cfg(feature = "unproven")]
-macro_rules! fn_try { 
+macro_rules! fn_try {
 	($body:expr => catch {
-		$($err_pat:pat => $pat_bod:expr),+ 
+		$($err_pat:pat => $pat_bod:expr),+
 	}) => {
 		match (|| { Ok($body) })() {
 			Ok(v) => v,
@@ -331,7 +333,7 @@ macro_rules! fn_try {
 /// [`fn_expr!`]: macro.fn_expr.html
 /// [`fn_block!`]: macro.fn_block.html
 pub trait IntoSome: Sized {
-	fn into_some(self) -> Option<Self>;
+    fn into_some(self) -> Option<Self>;
 }
 
 /// Implementration of trait `IntoSome` for
@@ -346,10 +348,10 @@ pub trait IntoSome: Sized {
 /// ```
 ///
 impl<T> IntoSome for T {
-	/// This method moves `self` into a `Some` and returns it.
-	fn into_some(self) -> Option<Self> {
-		Some(self)
-	}
+    /// This method moves `self` into a `Some` and returns it.
+    fn into_some(self) -> Option<Self> {
+        Some(self)
+    }
 }
 
 /// This trait, which is implemented for all sized types,
@@ -391,9 +393,8 @@ impl<T> IntoSome for T {
 /// [`fn_expr!`]: macro.fn_expr.html
 /// [`fn_block!`]: macro.fn_block.html
 pub trait IntoOk<E>: Sized {
-
-	/// This method moves `self` into an `Ok` and returns it.
-	fn into_ok(self) -> Result<Self, E>;
+    /// This method moves `self` into an `Ok` and returns it.
+    fn into_ok(self) -> Result<Self, E>;
 }
 
 /// Implementration of trait `IntoOk` for
@@ -408,10 +409,9 @@ pub trait IntoOk<E>: Sized {
 /// ```
 ///
 impl<T, E> IntoOk<E> for T {
-
-	fn into_ok(self) -> Result<Self, E> {
-		Ok(self)
-	}
+    fn into_ok(self) -> Result<Self, E> {
+        Ok(self)
+    }
 }
 
 #[macro_use]
